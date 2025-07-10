@@ -1,0 +1,3 @@
+/home/tobi/dev/painting-analyzer/build/CMakeFiles/main.dir
+/home/tobi/dev/painting-analyzer/build/CMakeFiles/edit_cache.dir
+/home/tobi/dev/painting-analyzer/build/CMakeFiles/rebuild_cache.dir
