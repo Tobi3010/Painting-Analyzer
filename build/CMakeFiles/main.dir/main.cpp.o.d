@@ -211,8 +211,9 @@ CMakeFiles/main.dir/main.cpp.o: /home/tobi/dev/painting-analyzer/main.cpp \
  /usr/include/qt5/QtGui/qinputmethod.h /usr/include/qt5/QtCore/qlocale.h \
  /usr/include/qt5/QtCore/qvariant.h /usr/include/qt5/QtCore/qmap.h \
  /usr/include/qt5/QtCore/qhash.h /usr/include/qt5/QtCore/qshareddata.h \
- /usr/include/qt5/QtWidgets/QLabel /usr/include/qt5/QtWidgets/qlabel.h \
- /usr/include/qt5/QtWidgets/qframe.h /usr/include/qt5/QtWidgets/qwidget.h \
+ /usr/include/qt5/QtWidgets/QMainWindow \
+ /usr/include/qt5/QtWidgets/qmainwindow.h \
+ /usr/include/qt5/QtWidgets/qwidget.h \
  /usr/include/qt5/QtGui/qpaintdevice.h /usr/include/qt5/QtCore/qrect.h \
  /usr/include/qt5/QtGui/qpalette.h /usr/include/qt5/QtGui/qcolor.h \
  /usr/include/qt5/QtGui/qrgb.h /usr/include/qt5/QtGui/qrgba64.h \
@@ -227,7 +228,21 @@ CMakeFiles/main.dir/main.cpp.o: /home/tobi/dev/painting-analyzer/main.cpp \
  /usr/include/qt5/QtGui/qfont.h /usr/include/qt5/QtGui/qfontmetrics.h \
  /usr/include/qt5/QtGui/qfontinfo.h \
  /usr/include/qt5/QtWidgets/qsizepolicy.h \
- /usr/include/qt5/QtGui/qkeysequence.h /usr/include/qt5/QtGui/QPixmap \
+ /usr/include/qt5/QtGui/qkeysequence.h \
+ /usr/include/qt5/QtWidgets/qtabwidget.h /usr/include/qt5/QtGui/qicon.h \
+ /usr/include/qt5/QtWidgets/QLabel /usr/include/qt5/QtWidgets/qlabel.h \
+ /usr/include/qt5/QtWidgets/qframe.h \
+ /usr/include/qt5/QtWidgets/QPushButton \
+ /usr/include/qt5/QtWidgets/qpushbutton.h \
+ /usr/include/qt5/QtWidgets/qabstractbutton.h \
+ /usr/include/qt5/QtWidgets/QHBoxLayout \
+ /usr/include/qt5/QtWidgets/qboxlayout.h \
+ /usr/include/qt5/QtWidgets/qlayout.h \
+ /usr/include/qt5/QtWidgets/qlayoutitem.h \
+ /usr/include/qt5/QtWidgets/qboxlayout.h \
+ /usr/include/qt5/QtWidgets/qgridlayout.h \
+ /usr/include/qt5/QtWidgets/QVBoxLayout /usr/include/qt5/QtGui/QImage \
+ /usr/include/qt5/QtGui/qimage.h /usr/include/qt5/QtGui/QPixmap \
  /usr/include/qt5/QtGui/qpixmap.h \
  /usr/local/include/opencv4/opencv2/opencv.hpp \
  /usr/local/include/opencv4/opencv2/opencv_modules.hpp \
@@ -392,14 +407,4 @@ CMakeFiles/main.dir/main.cpp.o: /home/tobi/dev/painting-analyzer/main.cpp \
  /usr/local/include/opencv4/opencv2/stitching/detail/camera.hpp \
  /usr/local/include/opencv4/opencv2/video.hpp \
  /usr/local/include/opencv4/opencv2/video/tracking.hpp \
- /usr/local/include/opencv4/opencv2/video/background_segm.hpp \
- /usr/include/qt5/QtWidgets/QWidget /usr/include/qt5/QtWidgets/qwidget.h \
- /usr/include/qt5/QtWidgets/QPushButton \
- /usr/include/qt5/QtWidgets/qpushbutton.h \
- /usr/include/qt5/QtWidgets/qabstractbutton.h \
- /usr/include/qt5/QtGui/qicon.h /usr/include/qt5/QtWidgets/QLayout \
- /usr/include/qt5/QtWidgets/qlayout.h \
- /usr/include/qt5/QtWidgets/qlayoutitem.h \
- /usr/include/qt5/QtWidgets/qboxlayout.h \
- /usr/include/qt5/QtWidgets/qlayout.h \
- /usr/include/qt5/QtWidgets/qgridlayout.h
+ /usr/local/include/opencv4/opencv2/video/background_segm.hpp

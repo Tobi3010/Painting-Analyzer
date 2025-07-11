@@ -353,6 +353,7 @@ CMakeFiles/main.dir/main.cpp.o: /home/tobi/dev/painting-analyzer/main.cpp \
   /usr/include/qt5/QtCore/qvarlengtharray.h \
   /usr/include/qt5/QtCore/qvector.h \
   /usr/include/qt5/QtCore/qversiontagging.h \
+  /usr/include/qt5/QtGui/QImage \
   /usr/include/qt5/QtGui/QPixmap \
   /usr/include/qt5/QtGui/qbrush.h \
   /usr/include/qt5/QtGui/qcolor.h \
@@ -361,6 +362,7 @@ CMakeFiles/main.dir/main.cpp.o: /home/tobi/dev/painting-analyzer/main.cpp \
   /usr/include/qt5/QtGui/qfontinfo.h \
   /usr/include/qt5/QtGui/qfontmetrics.h \
   /usr/include/qt5/QtGui/qguiapplication.h \
+  /usr/include/qt5/QtGui/qicon.h \
   /usr/include/qt5/QtGui/qimage.h \
   /usr/include/qt5/QtGui/qinputmethod.h \
   /usr/include/qt5/QtGui/qkeysequence.h \
@@ -378,11 +380,23 @@ CMakeFiles/main.dir/main.cpp.o: /home/tobi/dev/painting-analyzer/main.cpp \
   /usr/include/qt5/QtGui/qtransform.h \
   /usr/include/qt5/QtGui/qwindowdefs.h \
   /usr/include/qt5/QtWidgets/QApplication \
+  /usr/include/qt5/QtWidgets/QHBoxLayout \
   /usr/include/qt5/QtWidgets/QLabel \
+  /usr/include/qt5/QtWidgets/QMainWindow \
+  /usr/include/qt5/QtWidgets/QPushButton \
+  /usr/include/qt5/QtWidgets/QVBoxLayout \
+  /usr/include/qt5/QtWidgets/qabstractbutton.h \
   /usr/include/qt5/QtWidgets/qapplication.h \
+  /usr/include/qt5/QtWidgets/qboxlayout.h \
   /usr/include/qt5/QtWidgets/qframe.h \
+  /usr/include/qt5/QtWidgets/qgridlayout.h \
   /usr/include/qt5/QtWidgets/qlabel.h \
+  /usr/include/qt5/QtWidgets/qlayout.h \
+  /usr/include/qt5/QtWidgets/qlayoutitem.h \
+  /usr/include/qt5/QtWidgets/qmainwindow.h \
+  /usr/include/qt5/QtWidgets/qpushbutton.h \
   /usr/include/qt5/QtWidgets/qsizepolicy.h \
+  /usr/include/qt5/QtWidgets/qtabwidget.h \
   /usr/include/qt5/QtWidgets/qtwidgets-config.h \
   /usr/include/qt5/QtWidgets/qtwidgetsglobal.h \
   /usr/include/qt5/QtWidgets/qwidget.h \
@@ -828,8 +842,6 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/local/lib64/libopencv_videoio.so.4.13.0:
 
-/usr/local/lib64/libopencv_stitching.so.4.13.0:
-
 /usr/local/lib64/libopencv_objdetect.so.4.13.0:
 
 /usr/local/lib64/libopencv_ml.so.4.13.0:
@@ -901,8 +913,6 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/lib64/libzstd.so.1:
 
 /usr/lib64/libz.so.1:
-
-/usr/lib64/libxml2.so.2:
 
 /usr/lib64/libxcb.so.1:
 
@@ -989,8 +999,6 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/lib64/libnettle.so.8:
 
 /usr/lib64/libndr.so.6:
-
-/usr/lib64/libndr-nbt.so.0:
 
 /usr/lib64/libndr-krb5pac.so.0:
 
@@ -1132,6 +1140,34 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/lib64/libOpenCL.so.1:
 
+/usr/lib64/libIlmThread-3_2.so.31:
+
+/usr/lib64/libtwolame.so.0:
+
+/usr/lib64/libGLdispatch.so.0:
+
+/usr/lib64/libGLX.so.0:
+
+/usr/lib/gcc/x86_64-redhat-linux/15/libstdc++.so:
+
+/usr/lib/gcc/x86_64-redhat-linux/15/libgcc_s.so:
+
+/usr/local/lib64/libopencv_features2d.so.4.13.0:
+
+/usr/lib/gcc/x86_64-redhat-linux/15/libgcc.a:
+
+/usr/lib/gcc/x86_64-redhat-linux/15/crtend.o:
+
+/usr/lib/gcc/x86_64-redhat-linux/15/crtbegin.o:
+
+/usr/local/lib64/libopencv_photo.so.4.13.0:
+
+/usr/lib64/libXdamage.so.1:
+
+/usr/lib64/libm.so:
+
+/usr/lib64/libc.so:
+
 /usr/include/c++/15/unordered_map:
 
 /usr/local/include/opencv4/opencv2/imgproc/segmentation.hpp:
@@ -1244,8 +1280,6 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/include/c++/15/bits/stl_set.h:
 
-/usr/include/qt5/QtCore/qatomic.h:
-
 /usr/lib64/libQt5Core.so.5.15.17:
 
 /usr/include/bits/types/struct_FILE.h:
@@ -1265,8 +1299,6 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/include/qt5/QtCore/qrect.h:
 
 /usr/include/c++/15/bits/stl_iterator_base_types.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/15/crtend.o:
 
 /usr/lib64/libvo-amrwbenc.so.0:
 
@@ -1302,8 +1334,6 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/local/include/opencv4/opencv2/photo.hpp:
 
-/usr/lib/gcc/x86_64-redhat-linux/15/libgcc_s.so:
-
 /usr/lib64/libopencore-amrnb.so.0:
 
 /usr/local/include/opencv4/opencv2/core/mat.hpp:
@@ -1323,6 +1353,8 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/include/c++/15/ios:
 
 /usr/include/c++/15/bits/std_abs.h:
+
+/usr/include/qt5/QtWidgets/qboxlayout.h:
 
 /usr/include/c++/15/bits/sstream.tcc:
 
@@ -1354,6 +1386,10 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/include/c++/15/bits/locale_facets_nonio.h:
 
+/usr/lib64/libxml2.so.2:
+
+/usr/include/qt5/QtWidgets/qmainwindow.h:
+
 /usr/local/include/opencv4/opencv2/flann/all_indices.h:
 
 /usr/include/c++/15/cstdlib:
@@ -1361,6 +1397,10 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/lib64/libgmp.so.10:
 
 /usr/include/bits/types/wint_t.h:
+
+/usr/local/lib64/libopencv_stitching.so.4.13.0:
+
+/usr/include/qt5/QtWidgets/qtabwidget.h:
 
 /usr/include/c++/15/bits/ios_base.h:
 
@@ -1415,6 +1455,14 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/include/c++/15/bits/stl_function.h:
 
 /usr/include/bits/types/struct_itimerspec.h:
+
+/usr/lib64/libOpenEXRCore-3_2.so.31:
+
+/usr/lib64/libIex-3_2.so.31:
+
+/usr/include/c++/15/bits/stl_algo.h:
+
+/usr/include/bits/types/time_t.h:
 
 /usr/include/c++/15/list:
 
@@ -1726,6 +1774,8 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/include/bits/mathcalls.h:
 
+/usr/include/qt5/QtWidgets/qgridlayout.h:
+
 /usr/include/bits/types/clock_t.h:
 
 /usr/local/include/opencv4/opencv2/dnn/dict.hpp:
@@ -1772,6 +1822,10 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/include/bits/struct_rwlock.h:
 
+/usr/lib64/libImath-3_1.so.29:
+
+/usr/include/c++/15/bits/uses_allocator.h:
+
 /usr/include/qt5/QtGui/qkeysequence.h:
 
 /usr/local/include/opencv4/opencv2/video.hpp:
@@ -1807,8 +1861,6 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/include/c++/15/bits/stl_relops.h:
 
 /usr/include/c++/15/cfloat:
-
-/usr/lib/gcc/x86_64-redhat-linux/15/crtbegin.o:
 
 /usr/include/c++/15/bits/range_access.h:
 
@@ -1956,8 +2008,6 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/include/ctype.h:
 
-/usr/lib64/libc.so:
-
 /usr/include/endian.h:
 
 /usr/include/stdint.h:
@@ -2066,6 +2116,8 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/include/qt5/QtCore/qmetatype.h:
 
+/usr/include/qt5/QtWidgets/QPushButton:
+
 /usr/include/c++/15/type_traits:
 
 /usr/include/qt5/QtCore/qnumeric.h:
@@ -2118,13 +2170,7 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/include/qt5/QtCore/qversiontagging.h:
 
-/usr/lib64/libOpenEXRCore-3_2.so.31:
-
-/usr/include/c++/15/bits/stl_algo.h:
-
-/usr/include/bits/types/time_t.h:
-
-/usr/lib64/libIex-3_2.so.31:
+/usr/include/qt5/QtGui/QImage:
 
 /usr/include/qt5/QtGui/qbrush.h:
 
@@ -2139,6 +2185,8 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/include/qt5/QtGui/qguiapplication.h:
 
 /lib64/libcairo-gobject.so.2:
+
+/usr/include/qt5/QtGui/qicon.h:
 
 /usr/lib64/libxkbcommon.so.0:
 
@@ -2186,9 +2234,25 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/local/include/opencv4/opencv2/imgproc.hpp:
 
+/usr/include/qt5/QtWidgets/QHBoxLayout:
+
+/usr/lib64/libgme.so.0:
+
+/usr/local/include/opencv4/opencv2/core/cuda.hpp:
+
+/usr/lib64/libicui18n.so.76:
+
+/usr/local/include/opencv4/opencv2/opencv.hpp:
+
 /usr/lib64/samba/libcliauth-private-samba.so:
 
 /usr/include/qt5/QtWidgets/QLabel:
+
+/usr/include/qt5/QtWidgets/QMainWindow:
+
+/usr/include/qt5/QtWidgets/QVBoxLayout:
+
+/usr/include/qt5/QtWidgets/qabstractbutton.h:
 
 /usr/lib64/libgsttag-1.0.so.0:
 
@@ -2199,6 +2263,14 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/lib64/libgpg-error.so.0:
 
 /usr/include/qt5/QtWidgets/qlabel.h:
+
+/usr/lib64/libndr-nbt.so.0:
+
+/usr/include/qt5/QtWidgets/qlayout.h:
+
+/usr/include/qt5/QtCore/qatomic.h:
+
+/usr/include/qt5/QtWidgets/qlayoutitem.h:
 
 /usr/lib64/libwayland-egl.so.1:
 
@@ -2256,17 +2328,15 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/local/include/opencv4/opencv2/core/base.hpp:
 
-/usr/lib64/libgme.so.0:
-
-/usr/local/include/opencv4/opencv2/core/cuda.hpp:
-
-/usr/lib64/libicui18n.so.76:
-
-/usr/local/include/opencv4/opencv2/opencv.hpp:
-
 /usr/local/lib64/libopencv_gapi.so.4.13.0:
 
 /usr/local/include/opencv4/opencv2/core/cuda.inl.hpp:
+
+/usr/lib64/libLerc.so.4:
+
+/usr/include/qt5/QtCore/qhash.h:
+
+/usr/local/include/opencv4/opencv2/core/cuda_types.hpp:
 
 /usr/local/include/opencv4/opencv2/flann/hierarchical_clustering_index.h:
 
@@ -2304,6 +2374,8 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/local/include/opencv4/opencv2/core/utils/logtag.hpp:
 
+/usr/include/qt5/QtWidgets/qpushbutton.h:
+
 /usr/local/include/opencv4/opencv2/core/version.hpp:
 
 /usr/local/include/opencv4/opencv2/dnn.hpp:
@@ -2321,10 +2393,6 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/local/include/opencv4/opencv2/flann/result_set.h:
 
 /usr/local/include/opencv4/opencv2/dnn/layer.hpp:
-
-/usr/local/lib64/libopencv_features2d.so.4.13.0:
-
-/usr/lib/gcc/x86_64-redhat-linux/15/libgcc.a:
 
 /usr/local/include/opencv4/opencv2/flann/any.h:
 
@@ -2437,29 +2505,3 @@ CMakeFiles/main.dir/main.cpp.o:
 /lib64/libgcc_s.so.1:
 
 /usr/lib64/crt1.o:
-
-/usr/local/lib64/libopencv_photo.so.4.13.0:
-
-/usr/lib64/libXdamage.so.1:
-
-/usr/lib64/libm.so:
-
-/usr/lib/gcc/x86_64-redhat-linux/15/libstdc++.so:
-
-/usr/lib64/libGLX.so.0:
-
-/usr/lib64/libtwolame.so.0:
-
-/usr/lib64/libGLdispatch.so.0:
-
-/usr/lib64/libIlmThread-3_2.so.31:
-
-/usr/include/c++/15/bits/uses_allocator.h:
-
-/usr/lib64/libImath-3_1.so.29:
-
-/usr/include/qt5/QtCore/qhash.h:
-
-/usr/local/include/opencv4/opencv2/core/cuda_types.hpp:
-
-/usr/lib64/libLerc.so.4:
