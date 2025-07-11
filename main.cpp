@@ -8,6 +8,25 @@
 #include <QPixmap>
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
+#include <iostream>
+#include <QDebug>
+#include <QTextStream>
+
+
+
+bool isGrayImage( cv::Mat img ) // returns true if the given 3 channel image is B = G = R
+{
+    cv::Mat dst;
+    cv::Mat bgr[3];
+    split( img, bgr );
+    absdiff( bgr[0], bgr[1], dst );
+
+    if(countNonZero( dst ))
+        return false;
+
+    absdiff( bgr[0], bgr[2], dst );
+    return !countNonZero(dst);
+}
 
 
 // Window class 
@@ -18,6 +37,7 @@ public:
     }
 
 private:
+   
     // Orinal and Modifed image matrixes, to swift between them quick
     cv::Mat imgOriginal; // Matrix to save original version of image
     cv::Mat imgModified; // Matrix for modified changes to image
@@ -52,14 +72,13 @@ private:
 
     // Sets the current image displayed on screen
     void imgSet(cv::Mat img) {
-        cv::cvtColor(img, img, cv::COLOR_BGR2RGB);
         QImage qimg(
             img.data, 
             img.cols, 
             img.rows, 
             img.step, 
-            QImage::Format_RGB888);
-
+            QImage::Format_BGR888);
+        
         imgLabel->setPixmap(QPixmap::fromImage(qimg));
     }
 
@@ -67,6 +86,7 @@ private:
     void imgSelect(const std::string &path) {
         imgOriginal = cv::imread(path);
         if (imgOriginal.empty()) return;
+        imgOriginal.copyTo(imgModified);
         imgSet(imgOriginal);
     }
 
@@ -75,11 +95,23 @@ private:
         imgSelect("../pics/vi.jpg");
     }
 
-    void grayscale(){
-        cvtColor(imgOriginal, imgModified, cv::COLOR_RGB2GRAY);
-        imgSet(imgModified);
+     void grayscale(){
+        if (isGrayImage(imgModified)) {
+            imgSet(imgOriginal);
+            imgOriginal.copyTo(imgModified);
+        }
+        else {
+            cvtColor(imgOriginal, imgModified, cv::COLOR_BGR2GRAY);
+            cvtColor(imgModified, imgModified, cv::COLOR_GRAY2BGR);
+            imgSet(imgModified);
+        }
     }
 };
+
+
+// for bug prints
+//QTextStream out(stdout);
+//out << "colors\n";
 
 
 int main(int argc, char *argv[]) {

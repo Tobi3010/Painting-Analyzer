@@ -408,4 +408,9 @@ CMakeFiles/main.dir/main.cpp.o: /home/tobi/dev/painting-analyzer/main.cpp \
  /usr/local/include/opencv4/opencv2/video.hpp \
  /usr/local/include/opencv4/opencv2/video/tracking.hpp \
  /usr/local/include/opencv4/opencv2/video/background_segm.hpp \
- /usr/local/include/opencv4/opencv2/imgproc/imgproc.hpp
+ /usr/local/include/opencv4/opencv2/imgproc/imgproc.hpp \
+ /usr/include/qt5/QtCore/QDebug /usr/include/qt5/QtCore/qdebug.h \
+ /usr/include/qt5/QtCore/qtextstream.h /usr/include/qt5/QtCore/qset.h \
+ /usr/include/qt5/QtCore/qcontiguouscache.h \
+ /usr/include/qt5/QtCore/QTextStream \
+ /usr/include/qt5/QtCore/qtextstream.h

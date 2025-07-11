@@ -290,6 +290,8 @@ CMakeFiles/main.dir/main.cpp.o: /home/tobi/dev/painting-analyzer/main.cpp \
   /usr/include/locale.h \
   /usr/include/math.h \
   /usr/include/pthread.h \
+  /usr/include/qt5/QtCore/QDebug \
+  /usr/include/qt5/QtCore/QTextStream \
   /usr/include/qt5/QtCore/qalgorithms.h \
   /usr/include/qt5/QtCore/qarraydata.h \
   /usr/include/qt5/QtCore/qatomic.h \
@@ -303,9 +305,11 @@ CMakeFiles/main.dir/main.cpp.o: /home/tobi/dev/painting-analyzer/main.cpp \
   /usr/include/qt5/QtCore/qconfig.h \
   /usr/include/qt5/QtCore/qcontainerfwd.h \
   /usr/include/qt5/QtCore/qcontainertools_impl.h \
+  /usr/include/qt5/QtCore/qcontiguouscache.h \
   /usr/include/qt5/QtCore/qcoreapplication.h \
   /usr/include/qt5/QtCore/qcoreevent.h \
   /usr/include/qt5/QtCore/qdatastream.h \
+  /usr/include/qt5/QtCore/qdebug.h \
   /usr/include/qt5/QtCore/qeventloop.h \
   /usr/include/qt5/QtCore/qflags.h \
   /usr/include/qt5/QtCore/qgenericatomic.h \
@@ -335,6 +339,7 @@ CMakeFiles/main.dir/main.cpp.o: /home/tobi/dev/painting-analyzer/main.cpp \
   /usr/include/qt5/QtCore/qrefcount.h \
   /usr/include/qt5/QtCore/qregexp.h \
   /usr/include/qt5/QtCore/qscopedpointer.h \
+  /usr/include/qt5/QtCore/qset.h \
   /usr/include/qt5/QtCore/qshareddata.h \
   /usr/include/qt5/QtCore/qsharedpointer.h \
   /usr/include/qt5/QtCore/qsharedpointer_impl.h \
@@ -348,6 +353,7 @@ CMakeFiles/main.dir/main.cpp.o: /home/tobi/dev/painting-analyzer/main.cpp \
   /usr/include/qt5/QtCore/qsysinfo.h \
   /usr/include/qt5/QtCore/qsystemdetection.h \
   /usr/include/qt5/QtCore/qtcore-config.h \
+  /usr/include/qt5/QtCore/qtextstream.h \
   /usr/include/qt5/QtCore/qtypeinfo.h \
   /usr/include/qt5/QtCore/qvariant.h \
   /usr/include/qt5/QtCore/qvarlengtharray.h \
@@ -502,6 +508,7 @@ CMakeFiles/main.dir/main.cpp.o: /home/tobi/dev/painting-analyzer/main.cpp \
   /usr/local/include/opencv4/opencv2/highgui.hpp \
   /usr/local/include/opencv4/opencv2/imgcodecs.hpp \
   /usr/local/include/opencv4/opencv2/imgproc.hpp \
+  /usr/local/include/opencv4/opencv2/imgproc/imgproc.hpp \
   /usr/local/include/opencv4/opencv2/imgproc/segmentation.hpp \
   /usr/local/include/opencv4/opencv2/ml.hpp \
   /usr/local/include/opencv4/opencv2/ml/ml.inl.hpp \
@@ -1028,8 +1035,6 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/lib64/libidn2.so.0:
 
-/usr/lib64/libicudata.so.76:
-
 /usr/lib64/libgtk-3.so.0:
 
 /usr/lib64/libwayland-cursor.so.0:
@@ -1168,6 +1173,16 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/lib64/libc.so:
 
+/usr/lib64/libgdk-3.so.0:
+
+/usr/lib64/crtn.o:
+
+/usr/lib64/crt1.o:
+
+/lib64/libgcc_s.so.1:
+
+/lib64/libcairo-gobject.so.2:
+
 /usr/include/c++/15/unordered_map:
 
 /usr/local/include/opencv4/opencv2/imgproc/segmentation.hpp:
@@ -1213,6 +1228,10 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/include/qt5/QtCore/qvarlengtharray.h:
 
 /usr/include/c++/15/functional:
+
+/lib64/libmvec.so.1:
+
+/usr/include/c++/15/ext/string_conversions.h:
 
 /usr/include/c++/15/bits/hashtable_policy.h:
 
@@ -1296,6 +1315,8 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/include/c++/15/bits/shared_ptr_base.h:
 
+/usr/include/qt5/QtCore/qcontiguouscache.h:
+
 /usr/include/qt5/QtCore/qrect.h:
 
 /usr/include/c++/15/bits/stl_iterator_base_types.h:
@@ -1309,6 +1330,8 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/include/qt5/QtCore/qcompilerdetection.h:
 
 /usr/include/c++/15/bits/stl_construct.h:
+
+/usr/include/qt5/QtCore/qdebug.h:
 
 /usr/include/c++/15/memory:
 
@@ -1403,10 +1426,6 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/include/qt5/QtWidgets/qtabwidget.h:
 
 /usr/include/c++/15/bits/ios_base.h:
-
-/usr/lib64/libgdk-3.so.0:
-
-/usr/lib64/crtn.o:
 
 /usr/include/bits/types/__FILE.h:
 
@@ -1728,6 +1747,10 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/include/bits/locale.h:
 
+/usr/lib64/libicudata.so.76:
+
+/usr/include/qt5/QtCore/qtextstream.h:
+
 /usr/include/bits/atomic_wide_counter.h:
 
 /usr/local/include/opencv4/opencv2/flann/defines.h:
@@ -1757,6 +1780,12 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/include/c++/15/bits/stream_iterator.h:
 
 /usr/include/c++/15/bits/invoke.h:
+
+/usr/lib64/crti.o:
+
+/usr/include/c++/15/bit:
+
+/usr/include/bits/types/__fpos64_t.h:
 
 /usr/include/c++/15/bits/unordered_map.h:
 
@@ -1888,12 +1917,6 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/include/stdio.h:
 
-/usr/include/c++/15/bit:
-
-/usr/include/bits/types/__fpos64_t.h:
-
-/usr/lib64/crti.o:
-
 /usr/lib64/libunwind.so.8:
 
 /usr/lib64/libbrotlienc.so.1:
@@ -1968,6 +1991,8 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/local/include/opencv4/opencv2/stitching/detail/motion_estimators.hpp:
 
+/usr/include/qt5/QtCore/QDebug:
+
 /usr/include/c++/15/bits/locale_classes.tcc:
 
 /usr/include/c++/15/vector:
@@ -2031,6 +2056,16 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/include/linux/types.h:
 
 /usr/include/pthread.h:
+
+/usr/include/qt5/QtCore/QTextStream:
+
+/usr/lib64/libsnappy.so.1:
+
+/usr/include/qt5/QtGui/qmatrix.h:
+
+/usr/lib64/libaribb24.so.0:
+
+/usr/lib/gcc/x86_64-redhat-linux/15/include/mm_malloc.h:
 
 /usr/include/qt5/QtCore/qalgorithms.h:
 
@@ -2136,6 +2171,8 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/local/include/opencv4/opencv2/flann/lsh_index.h:
 
+/usr/include/qt5/QtCore/qset.h:
+
 /usr/local/lib64/libopencv_calib3d.so.4.13.0:
 
 /usr/include/alloca.h:
@@ -2184,8 +2221,6 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/include/qt5/QtGui/qguiapplication.h:
 
-/lib64/libcairo-gobject.so.2:
-
 /usr/include/qt5/QtGui/qicon.h:
 
 /usr/lib64/libxkbcommon.so.0:
@@ -2197,14 +2232,6 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/include/qt5/QtGui/qinputmethod.h:
 
 /usr/local/include/opencv4/opencv2/dnn/version.hpp:
-
-/usr/lib64/libsnappy.so.1:
-
-/usr/include/qt5/QtGui/qmatrix.h:
-
-/usr/lib64/libaribb24.so.0:
-
-/usr/lib/gcc/x86_64-redhat-linux/15/include/mm_malloc.h:
 
 /usr/lib64/libvpl.so.2:
 
@@ -2368,6 +2395,8 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/local/include/opencv4/opencv2/core/traits.hpp:
 
+/usr/local/include/opencv4/opencv2/imgproc/imgproc.hpp:
+
 /usr/local/include/opencv4/opencv2/core/utils/logger.defines.hpp:
 
 /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h:
@@ -2429,10 +2458,6 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/include/c++/15/bits/charconv.h:
 
 /usr/local/include/opencv4/opencv2/flann/nn_index.h:
-
-/usr/include/c++/15/ext/string_conversions.h:
-
-/lib64/libmvec.so.1:
 
 /usr/include/bits/types/locale_t.h:
 
@@ -2501,7 +2526,3 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/local/include/opencv4/opencv2/flann/general.h:
 
 /lib64/libc.so.6:
-
-/lib64/libgcc_s.so.1:
-
-/usr/lib64/crt1.o:

@@ -291,6 +291,8 @@ CMakeFiles/main.dir/main.cpp.o
  /usr/include/locale.h
  /usr/include/math.h
  /usr/include/pthread.h
+ /usr/include/qt5/QtCore/QDebug
+ /usr/include/qt5/QtCore/QTextStream
  /usr/include/qt5/QtCore/qalgorithms.h
  /usr/include/qt5/QtCore/qarraydata.h
  /usr/include/qt5/QtCore/qatomic.h
@@ -304,9 +306,11 @@ CMakeFiles/main.dir/main.cpp.o
  /usr/include/qt5/QtCore/qconfig.h
  /usr/include/qt5/QtCore/qcontainerfwd.h
  /usr/include/qt5/QtCore/qcontainertools_impl.h
+ /usr/include/qt5/QtCore/qcontiguouscache.h
  /usr/include/qt5/QtCore/qcoreapplication.h
  /usr/include/qt5/QtCore/qcoreevent.h
  /usr/include/qt5/QtCore/qdatastream.h
+ /usr/include/qt5/QtCore/qdebug.h
  /usr/include/qt5/QtCore/qeventloop.h
  /usr/include/qt5/QtCore/qflags.h
  /usr/include/qt5/QtCore/qgenericatomic.h
@@ -336,6 +340,7 @@ CMakeFiles/main.dir/main.cpp.o
  /usr/include/qt5/QtCore/qrefcount.h
  /usr/include/qt5/QtCore/qregexp.h
  /usr/include/qt5/QtCore/qscopedpointer.h
+ /usr/include/qt5/QtCore/qset.h
  /usr/include/qt5/QtCore/qshareddata.h
  /usr/include/qt5/QtCore/qsharedpointer.h
  /usr/include/qt5/QtCore/qsharedpointer_impl.h
@@ -349,6 +354,7 @@ CMakeFiles/main.dir/main.cpp.o
  /usr/include/qt5/QtCore/qsysinfo.h
  /usr/include/qt5/QtCore/qsystemdetection.h
  /usr/include/qt5/QtCore/qtcore-config.h
+ /usr/include/qt5/QtCore/qtextstream.h
  /usr/include/qt5/QtCore/qtypeinfo.h
  /usr/include/qt5/QtCore/qvariant.h
  /usr/include/qt5/QtCore/qvarlengtharray.h
@@ -503,6 +509,7 @@ CMakeFiles/main.dir/main.cpp.o
  /usr/local/include/opencv4/opencv2/highgui.hpp
  /usr/local/include/opencv4/opencv2/imgcodecs.hpp
  /usr/local/include/opencv4/opencv2/imgproc.hpp
+ /usr/local/include/opencv4/opencv2/imgproc/imgproc.hpp
  /usr/local/include/opencv4/opencv2/imgproc/segmentation.hpp
  /usr/local/include/opencv4/opencv2/ml.hpp
  /usr/local/include/opencv4/opencv2/ml/ml.inl.hpp
