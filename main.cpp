@@ -7,6 +7,7 @@
 #include <QImage>
 #include <QPixmap>
 #include <opencv2/opencv.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 
 // Window class 
@@ -17,47 +18,66 @@ public:
     }
 
 private:
-    
-    QLabel *imageLabel; // Make it a class member
+    // Orinal and Modifed image matrixes, to swift between them quick
+    cv::Mat imgOriginal; // Matrix to save original version of image
+    cv::Mat imgModified; // Matrix for modified changes to image
+    QLabel  *imgLabel;
 
     void initUI() {
-        setWindowTitle("My Qt App");
+        setWindowTitle("Painting Analtzer App 2.0");
 
         // Buttons
         QPushButton *button1 = new QPushButton("One");
         QPushButton *button2 = new QPushButton("Two");
 
-        connect(button1, &QPushButton::clicked, this, &MainWindow::imgUpdate);
+        connect(button1, &QPushButton::clicked, this, &MainWindow::grayscale);
 
         QHBoxLayout *buttonLayout = new QHBoxLayout;
         buttonLayout->addWidget(button1);
         buttonLayout->addWidget(button2);
 
-        // Image label
-        imageLabel = new QLabel;
-        imgSet("../pics/jinx.jpg");
-
-        imageLabel->setAlignment(Qt::AlignCenter);
+        // Image
+        imgLabel = new QLabel;
+        imgSelect("../pics/jinx.jpg");
+        imgLabel->setAlignment(Qt::AlignCenter);
 
         // Layouts
         QWidget *central = new QWidget;
         QVBoxLayout *mainLayout = new QVBoxLayout(central);
-        mainLayout->addWidget(imageLabel);
+        mainLayout->addWidget(imgLabel);
         mainLayout->addLayout(buttonLayout);
 
         setCentralWidget(central);
     }
 
-    void imgSet(const std::string &path) {
-        cv::Mat img = cv::imread(path);
-        if (img.empty()) return;
+    // Sets the current image displayed on screen
+    void imgSet(cv::Mat img) {
         cv::cvtColor(img, img, cv::COLOR_BGR2RGB);
-        QImage qimg(img.data, img.cols, img.rows, img.step, QImage::Format_RGB888);
-        imageLabel->setPixmap(QPixmap::fromImage(qimg));
+        QImage qimg(
+            img.data, 
+            img.cols, 
+            img.rows, 
+            img.step, 
+            QImage::Format_RGB888);
+
+        imgLabel->setPixmap(QPixmap::fromImage(qimg));
     }
 
+    // Select a new image to display
+    void imgSelect(const std::string &path) {
+        imgOriginal = cv::imread(path);
+        if (imgOriginal.empty()) return;
+        imgSet(imgOriginal);
+    }
+
+    // Connected to button
     void imgUpdate() {
-        imgSet("../pics/vi.jpg");
+        imgSelect("../pics/vi.jpg");
+    }
+
+    void grayscale(){
+        cvtColor(imgOriginal, imgModified, cv::COLOR_RGB2GRAY);
+        imgSet(imgModified);
     }
 };
 
@@ -65,8 +85,6 @@ private:
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
-
-   
     MainWindow window;
     window.show();
 
