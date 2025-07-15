@@ -7,6 +7,6 @@ find_package(OpenCV REQUIRED)
 
 find_package(Qt5 REQUIRED COMPONENTS Widgets)
 
-add_executable(main main.cpp)
+add_executable(main main.cpp grayscale.cpp)
 
 target_link_libraries(main PRIVATE ${OpenCV_LIBS} Qt5::Widgets)

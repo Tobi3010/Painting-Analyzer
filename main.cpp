@@ -11,39 +11,26 @@
 #include <iostream>
 #include <QDebug>
 #include <QTextStream>
+#include "grayscale.hpp"
 
 
-
-bool isGrayImage( cv::Mat img ) // returns true if the given 3 channel image is B = G = R
+// Window class
+class MainWindow : public QMainWindow
 {
-    cv::Mat dst;
-    cv::Mat bgr[3];
-    split( img, bgr );
-    absdiff( bgr[0], bgr[1], dst );
-
-    if(countNonZero( dst ))
-        return false;
-
-    absdiff( bgr[0], bgr[2], dst );
-    return !countNonZero(dst);
-}
-
-
-// Window class 
-class MainWindow : public QMainWindow {
 public:
-    MainWindow() {
+    MainWindow()
+    {
         initUI();
     }
 
 private:
-   
     // Orinal and Modifed image matrixes, to swift between them quick
     cv::Mat imgOriginal; // Matrix to save original version of image
     cv::Mat imgModified; // Matrix for modified changes to image
-    QLabel  *imgLabel;
+    QLabel *imgLabel;
 
-    void initUI() {
+    void initUI()
+    {
         setWindowTitle("Painting Analtzer App 2.0");
 
         // Buttons
@@ -64,57 +51,62 @@ private:
         // Layouts
         QWidget *central = new QWidget;
         QVBoxLayout *mainLayout = new QVBoxLayout(central);
-        mainLayout->addWidget(imgLabel);
         mainLayout->addLayout(buttonLayout);
+        mainLayout->addWidget(imgLabel);
 
         setCentralWidget(central);
     }
 
     // Sets the current image displayed on screen
-    void imgSet(cv::Mat img) {
+    void imgSet(cv::Mat img)
+    {
         QImage qimg(
-            img.data, 
-            img.cols, 
-            img.rows, 
-            img.step, 
+            img.data,
+            img.cols,
+            img.rows,
+            img.step,
             QImage::Format_BGR888);
-        
+
         imgLabel->setPixmap(QPixmap::fromImage(qimg));
     }
 
     // Select a new image to display
-    void imgSelect(const std::string &path) {
+    void imgSelect(const std::string &path)
+    {
         imgOriginal = cv::imread(path);
-        if (imgOriginal.empty()) return;
+        if (imgOriginal.empty())
+            return;
         imgOriginal.copyTo(imgModified);
         imgSet(imgOriginal);
     }
 
     // Connected to button
-    void imgUpdate() {
+    void imgUpdate()
+    {
         imgSelect("../pics/vi.jpg");
     }
 
-     void grayscale(){
-        if (isGrayImage(imgModified)) {
+    void grayscale()
+    {
+        if (isGrayImage(imgModified))
+        {
             imgSet(imgOriginal);
             imgOriginal.copyTo(imgModified);
         }
-        else {
-            cvtColor(imgOriginal, imgModified, cv::COLOR_BGR2GRAY);
-            cvtColor(imgModified, imgModified, cv::COLOR_GRAY2BGR);
+        else
+        {
+            grayscaleBasic(imgOriginal).copyTo(imgModified);
             imgSet(imgModified);
         }
     }
 };
 
-
 // for bug prints
-//QTextStream out(stdout);
-//out << "colors\n";
+// QTextStream out(stdout);
+// out << "colors\n";
 
-
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     QApplication app(argc, argv);
 
     MainWindow window;
