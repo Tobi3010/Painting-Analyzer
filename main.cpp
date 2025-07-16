@@ -94,8 +94,10 @@ private:
             imgOriginal.copyTo(imgModified);
         }
         else
-        {
-            grayscaleBasic(imgOriginal).copyTo(imgModified);
+        {   
+            
+            grayscaleShades(imgOriginal).copyTo(imgModified);
+            cvtColor(imgModified, imgModified, cv::COLOR_GRAY2BGR);  // Gray in three BGR channels for displaying
             imgSet(imgModified);
         }
     }
