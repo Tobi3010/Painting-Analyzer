@@ -51,7 +51,9 @@ private:
     // Orinal and Modifed image matrixes, to swift between them quick
     cv::Mat imgOriginal; // Matrix to save original version of image
     cv::Mat imgModified; // Matrix for modified changes to image
+    QLabel *imgTextLabel;
     QLabel *imgLabel;
+  
 
     void initUI()
     {
@@ -67,7 +69,7 @@ private:
 
         connect(btn_file, &QPushButton::clicked, this, &MainWindow::fileSelect);
         connect(btn_options, &QPushButton::clicked, this, &MainWindow::grayscale);
-        
+        connect(btn_reset, &QPushButton::clicked, this, &MainWindow::reset);
        
         QVBoxLayout *btn_layout = new QVBoxLayout(btn_widget);
         btn_layout->addWidget(btn_file);
@@ -87,17 +89,22 @@ private:
         
         // Image ---------------------------------------------------------------
         imgLabel = new QLabel;
+        imgTextLabel = new QLabel;
         imgSelect("../pics/traintrack.jpg");  
+
+        QVBoxLayout *imgLayout = new QVBoxLayout();
+        imgLayout->addWidget(imgTextLabel, 1);
+        imgTextLabel->setAlignment(Qt::AlignCenter);
+        imgLayout->addWidget(imgLabel, 20);
 
         // Layouts
         QWidget *central = new QWidget;
         QHBoxLayout *mainLayout = new QHBoxLayout(central);
         mainLayout->addWidget(btn_widget,1);
-        mainLayout->addWidget(imgLabel, 5);
+        mainLayout->addLayout(imgLayout, 5);
         central->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         
         setCentralWidget(central);
-
     }
 
 
@@ -110,7 +117,12 @@ private:
                 tr("Image Files (*.jpg *.png)")
             );
         
+        imgTextLabel->setText(file1Name);
         imgSelect(file1Name.toStdString());
+    }
+
+    void reset(){
+        imgSet(imgOriginal);
     }
 
     // Sets the current image displayed on screen
@@ -146,12 +158,6 @@ private:
             return;
         imgOriginal.copyTo(imgModified);
         imgSet(imgOriginal);
-    }
-
-    // Connected to button
-    void imgUpdate()
-    {
-        imgSelect("../pics/vi.jpg");
     }
 
     void grayscale()
