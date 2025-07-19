@@ -4,8 +4,8 @@
 
 
 // returns true if grayscale, by checking BLUE = GREEN = RED
-bool isGrayImage(cv::Mat img) 
-{
+// Ensures it works no matter the number of channels.
+bool isGrayImage(cv::Mat img) {
     cv::Mat dst;
     cv::Mat bgr[3];
     split(img, bgr);
@@ -19,21 +19,19 @@ bool isGrayImage(cv::Mat img)
 }
 
 // Turn image into grayscale with all shades (0-255)
-void grayscaleBasic (cv::Mat &img)
-{
-    if (!img.empty()) {
-        cv::cvtColor(img, img, cv::COLOR_BGR2GRAY);
-    }
+void grayscale_fullrange (cv::Mat &img) {
+    if (img.empty()) { return; }
+
+    cv::cvtColor(img, img, cv::COLOR_BGR2GRAY);
 }
 
 // Function to divide image into n shades of grayscale (
 // Only binary (black and white) supported as of now
-void grayscaleShades(cv::Mat &img)
-{
-    
-    grayscaleBasic(img); // Turn image into base grayscale
-    int avg =  cv::mean(img)[0];     // Find average pixel value
-    //std::cout << avg << "\n";
+void grayscale_splitrange(cv::Mat &img) {
+    if (img.empty()) { return; }
+     
+    grayscale_fullrange(img);       // Turn image into base grayscale
+    int avg =  cv::mean(img)[0];    // Find average pixel value
   
     // Loop through pixels 
     for(int i=0; i<img.rows; i++)

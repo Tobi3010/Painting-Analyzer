@@ -20,68 +20,67 @@
 
 
 
+// QPushButton inherented class, with added stylesheet
 class Button : public QPushButton
 {
-    public:
-        Button(const QString &text, QWidget *parent = nullptr): QPushButton(text, parent){
-            setStyleSheet(
-                "color: #ffffff;"
-                "background-color: #000000;"
-                "selection-color: #ffffff;"
-                "selection-background-color: green;"
-            );
-        }
+public:
+    Button(const QString &text, QWidget *parent = nullptr): QPushButton(text, parent){
+        setStyleSheet(
+            "color: #ffffff;"
+            "background-color: #000000;"
+            "selection-color: #ffffff;"
+            "selection-background-color: green;"
+        );
+    }
 };
 
-
+// Layout widget with elements for grayscaling editing
 class GrayscaleLayout : public QWidget 
 {
-   
-    public:
-        GrayscaleLayout(cv::Mat* imgOriginal, cv::Mat* imgModified, std::function<void(const cv::Mat&)> imgSetCallback, QWidget *parent = nullptr) 
-            : QWidget(parent), imgOriginal(imgOriginal), imgModified(imgModified), imgSetCallback(imgSetCallback)
-        {
-            QVBoxLayout *layout = new QVBoxLayout(this);
-            Button *grayscale = new Button("Full Range Grayscale");
-            Button *grayscaleBinary = new Button("Binary Grayscale(Black & White)");
-            layout->addStretch();
-            layout->addWidget(grayscale);
-            layout->addWidget(grayscaleBinary);
-            layout->addStretch();
+public:
+    GrayscaleLayout(
+            cv::Mat* imgOriginal,               
+            cv::Mat* imgModified, 
+            std::function<void(const cv::Mat&) // Callback wrapper for imgSet from MainWindow
+            > 
+            imgSetCallback, 
+            QWidget *parent = nullptr) 
+            : 
+            QWidget(parent), 
+            imgOriginal(imgOriginal), 
+            imgModified(imgModified), 
+            imgSetCallback(imgSetCallback) 
+    {
+        QVBoxLayout *layout = new QVBoxLayout(this);
+        Button *grayscale = new Button("Full Range Grayscale");
+        Button *grayscaleBinary = new Button("Binary Grayscale(Black & White)");
+        layout->addStretch();
+        layout->addWidget(grayscale);
+        layout->addWidget(grayscaleBinary);
+        layout->addStretch();
 
-            connect(grayscale, &QPushButton::clicked, this, &GrayscaleLayout::fullrange_grayscale);
-            connect(grayscaleBinary, &QPushButton::clicked, this, &GrayscaleLayout::binary_grayscale);
-            
-        }
+        connect(grayscale, &QPushButton::clicked, this, &GrayscaleLayout::fullrange_grayscale);
+        connect(grayscaleBinary, &QPushButton::clicked, this, &GrayscaleLayout::binary_grayscale);
+    }
 
-    private:
-        cv::Mat* imgOriginal;
-        cv::Mat* imgModified;
-        std::function<void(const cv::Mat&)> imgSetCallback;
+private:
+    cv::Mat* imgOriginal;
+    cv::Mat* imgModified;
+    std::function<void(const cv::Mat&)> imgSetCallback;
 
-        void fullrange_grayscale() {
-            if (isGrayImage(*imgModified)) {
-                imgOriginal->copyTo(*imgModified);
-                imgSetCallback(*imgOriginal);
-            }
-            else {   
-                grayscaleBasic(*imgModified);
-                cv::cvtColor(*imgModified, *imgModified, cv::COLOR_GRAY2BGR);
-                imgSetCallback(*imgModified);
-            }
-        }
+    void fullrange_grayscale() {
+        imgOriginal->copyTo(*imgModified); // Reset imgModified first
+        grayscale_fullrange(*imgModified);
+        cv::cvtColor(*imgModified, *imgModified, cv::COLOR_GRAY2BGR);
+        imgSetCallback(*imgModified);
+    }
 
-        void binary_grayscale() {
-            if (isGrayImage(*imgModified)) {
-                imgOriginal->copyTo(*imgModified);
-                imgSetCallback(*imgOriginal);
-            }
-            else {   
-                grayscaleShades(*imgModified);
-                cv::cvtColor(*imgModified, *imgModified, cv::COLOR_GRAY2BGR);
-                imgSetCallback(*imgModified);
-            }
-        }
+    void binary_grayscale() {
+        imgOriginal->copyTo(*imgModified); // Reset imgModified first
+        grayscale_splitrange(*imgModified);
+        cv::cvtColor(*imgModified, *imgModified, cv::COLOR_GRAY2BGR);
+        imgSetCallback(*imgModified);
+    }
 };
 
     
@@ -91,143 +90,125 @@ class GrayscaleLayout : public QWidget
 // Window class
 class MainWindow : public QMainWindow
 {
-    public:
-        MainWindow() {
-            initUI();
-        }
+public:
+    MainWindow() {
+        initUI();
+    }
 
-    private:
-        // Orinal and Modifed image matrixes, to swift between them quick
-        cv::Mat imgOriginal; // Matrix to save original version of image
-        cv::Mat imgModified; // Matrix for modified changes to image
-        QLabel *imgTextLabel;
-        QLabel *imgLabel;
-        QWidget *btn_widget;
-        QVBoxLayout *btn_layout;
+private:
+    // Orinal and Modifed image matrixes, to swift between them quick
+    cv::Mat imgOriginal; // Matrix to save original version of image
+    cv::Mat imgModified; // Matrix for modified changes to image
+    QLabel *imgTextLabel;
+    QLabel *imgLabel;
+    QWidget *btn_widget;
+    QVBoxLayout *btn_layout;
+
+
+    void initUI() {
+        setWindowTitle("Painting Analyzer App 2.0");
     
+        // Buttons ------------------------------------------------------------
+        btn_widget = new QWidget();
+        Button *btn_file = new Button("File");
+        Button *btn_options = new Button("Options");
+        Button *btn_reset = new Button("Reset");
 
-        void initUI() {
-            setWindowTitle("Painting Analyzer App 2.0");
-            //setMaximumSize(500, 500);
+        connect(btn_file, &QPushButton::clicked, this, &MainWindow::fileSelect);
+        connect(btn_options, &QPushButton::clicked, this, &MainWindow::changeMenu);
+        connect(btn_reset, &QPushButton::clicked, this, &MainWindow::reset);
+    
+        btn_layout = new QVBoxLayout(btn_widget);
+        btn_layout->addWidget(btn_file);
+        btn_layout->addWidget(btn_options);
+        btn_layout->addStretch();
+        btn_layout->addWidget(btn_reset);
 
-            // Buttons ------------------------------------------------------------
-            btn_widget = new QWidget();
-            Button *btn_file = new Button("File");
-            Button *btn_options = new Button("Options");
-            Button *btn_reset = new Button("Reset");
-
-            connect(btn_file, &QPushButton::clicked, this, &MainWindow::fileSelect);
-            connect(btn_options, &QPushButton::clicked, this, &MainWindow::changeMenu);
-            connect(btn_reset, &QPushButton::clicked, this, &MainWindow::reset);
+        btn_widget->setStyleSheet(
+            "color: #ffffff;"
+            "background-color: #000000;"
+            "selection-color: #ffffff;"
+            "selection-background-color: green;"
+        );
+        btn_widget->setMinimumWidth(0.4*width());
+        btn_widget->setMaximumWidth(0.4*width());
+    
         
-            btn_layout = new QVBoxLayout(btn_widget);
-            btn_layout->addWidget(btn_file);
-            btn_layout->addWidget(btn_options);
-            btn_layout->addStretch();
-            btn_layout->addWidget(btn_reset);
+        // Image ---------------------------------------------------------------
+        imgLabel = new QLabel;
+        imgTextLabel = new QLabel;
+        imgSelect("../pics/traintrack.jpg");  
 
-            btn_widget->setStyleSheet(
-                "color: #ffffff;"
-                "background-color: #000000;"
-                "selection-color: #ffffff;"
-                "selection-background-color: green;"
-            );
-            btn_widget->setMinimumWidth(0.3*width());
-            btn_widget->setMaximumWidth(0.3*width());
+        QVBoxLayout *imgLayout = new QVBoxLayout();
+        imgLayout->addWidget(imgTextLabel, 1);
+        imgTextLabel->setAlignment(Qt::AlignCenter);
+        imgLayout->addWidget(imgLabel, 20);
+
+        // Layouts
+        QWidget *central = new QWidget;
+        QHBoxLayout *mainLayout = new QHBoxLayout(central);
+        mainLayout->addWidget(btn_widget,1);
+        mainLayout->addLayout(imgLayout, 5);
+        central->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         
-            
-            // Image ---------------------------------------------------------------
-            imgLabel = new QLabel;
-            imgTextLabel = new QLabel;
-            imgSelect("../pics/traintrack.jpg");  
+        setCentralWidget(central);
+    }
+    
+    void changeMenu() {
+        GrayscaleLayout *grayLayout = new GrayscaleLayout(
+            &imgOriginal,
+            &imgModified,                                      
+            [this](const cv::Mat& img) { this->imgSet(img); },  // Callback wrapper for imgSet
+            btn_widget
+        );
+        btn_layout->insertWidget(2, grayLayout); // Insert widget into current layout
+    }
 
-            QVBoxLayout *imgLayout = new QVBoxLayout();
-            imgLayout->addWidget(imgTextLabel, 1);
-            imgTextLabel->setAlignment(Qt::AlignCenter);
-            imgLayout->addWidget(imgLabel, 20);
 
-            // Layouts
-            QWidget *central = new QWidget;
-            QHBoxLayout *mainLayout = new QHBoxLayout(central);
-            mainLayout->addWidget(btn_widget,1);
-            mainLayout->addLayout(imgLayout, 5);
-            central->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-            
-            setCentralWidget(central);
-        }
-
-        void changeMenu() {
-            GrayscaleLayout *grayLayout = new GrayscaleLayout(
-                &imgOriginal,
-                &imgModified,
-                [this](const cv::Mat& img) { this->imgSet(img); },
-                btn_widget
+    void fileSelect() {
+        QString file1Name = 
+            QFileDialog::getOpenFileName(
+                this,
+                tr("Open mage file"), 
+                "/home/tobi/dev/painting-analyzer/pics", 
+                tr("Image Files (*.jpg *.png)")
             );
-            btn_layout->insertWidget(2, grayLayout);
+        
+        imgTextLabel->setText(file1Name);
+        imgSelect(file1Name.toStdString());
+    }
+
+    void reset() {
+        imgOriginal.copyTo(imgModified); // Reset imgModified
+        imgSet(imgOriginal);
+    }
+
+    // Sets the current image displayed on screen
+    void imgSet(cv::Mat img) {   
+        QImage qimg(
+            img.data,
+            img.cols,
+            img.rows,
+            img.step,
+            QImage::Format_BGR888);
+        
+        // Scale image along its bigger side, width or height, if equal always do width!
+        if (qimg.height() < qimg.width()) {
+            qimg = qimg.scaledToWidth(width() * 0.85, Qt::FastTransformation);
         }
-
-
-        void fileSelect() {
-            QString file1Name = 
-                QFileDialog::getOpenFileName(
-                    this,
-                    tr("Open mage file"), 
-                    "/home/tobi/dev/painting-analyzer/pics", 
-                    tr("Image Files (*.jpg *.png)")
-                );
-            
-            imgTextLabel->setText(file1Name);
-            imgSelect(file1Name.toStdString());
+        else {
+            qimg = qimg.scaledToHeight(height() * 0.85, Qt::FastTransformation);
         }
+        imgLabel->setPixmap(QPixmap::fromImage(qimg));
+        imgLabel->setAlignment(Qt::AlignCenter);
+    }
 
-        void reset() {
-            imgSet(imgOriginal);
-        }
-
-        // Sets the current image displayed on screen
-        void imgSet(cv::Mat img) {   
-            QImage qimg(
-                img.data,
-                img.cols,
-                img.rows,
-                img.step,
-                QImage::Format_BGR888);
-
-            QTextStream out(stdout);
-            //out << height() << ">\n";
-            //out << width() << ">\n";
-
-            
-            if (qimg.height() < qimg.width()) {
-                qimg = qimg.scaledToWidth(width() * 0.85, Qt::FastTransformation);
-            }
-            else {
-                qimg = qimg.scaledToHeight(height() * 0.85, Qt::FastTransformation);
-            }
-            imgLabel->setPixmap(QPixmap::fromImage(qimg));
-            imgLabel->setAlignment(Qt::AlignCenter);
-        }
-
-        // Select a new image to display
-        void imgSelect(const std::string &path) {
-            imgOriginal = cv::imread(path);
-            if (imgOriginal.empty())
-                return;
-            imgOriginal.copyTo(imgModified);
-            imgSet(imgOriginal);
-        }
-
-        void grayscale() {
-            if (isGrayImage(imgModified)) {
-                imgSet(imgOriginal);
-                imgOriginal.copyTo(imgModified);
-            }
-            else {   
-                grayscaleShades(imgModified);
-                cvtColor(imgModified, imgModified, cv::COLOR_GRAY2BGR);  // Gray in three BGR channels for displaying
-                imgSet(imgModified);
-            }
-        }
+    // Select a new image to display
+    void imgSelect(const std::string &path) {
+        imgOriginal = cv::imread(path);
+        if (imgOriginal.empty()) { return; }
+        imgSet(imgOriginal);
+    }
 };
 
 // for bug prints
