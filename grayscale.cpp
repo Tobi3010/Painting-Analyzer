@@ -19,18 +19,19 @@ bool isGrayImage(cv::Mat img)
 }
 
 // Turn image into grayscale with all shades (0-255)
-cv::Mat grayscaleBasic (cv::Mat img)
+void grayscaleBasic (cv::Mat &img)
 {
-    cvtColor(img, img, cv::COLOR_BGR2GRAY); // Turn image gray
-    return img;
+    if (!img.empty()) {
+        cv::cvtColor(img, img, cv::COLOR_BGR2GRAY);
+    }
 }
 
 // Function to divide image into n shades of grayscale (
 // Only binary (black and white) supported as of now
-cv::Mat grayscaleShades(cv::Mat img)
+void grayscaleShades(cv::Mat &img)
 {
     
-    grayscaleBasic(img).copyTo(img); // Turn image into base grayscale
+    grayscaleBasic(img); // Turn image into base grayscale
     int avg =  cv::mean(img)[0];     // Find average pixel value
     //std::cout << avg << "\n";
   
@@ -43,7 +44,6 @@ cv::Mat grayscaleShades(cv::Mat img)
             else {                         // If pixel valu is above average, turn it white
                 img.at<uchar>(i,j) = 255;  
             }
-    return img;
 }
 
 

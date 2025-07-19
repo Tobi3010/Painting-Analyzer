@@ -5,9 +5,9 @@
 // Declarations
 bool isGrayImage(cv::Mat img);
 
-cv::Mat grayscaleBasic(cv::Mat img);
+void grayscaleBasic(cv::Mat &img);
 
-cv::Mat grayscaleShades(cv::Mat img);
+void grayscaleShades(cv::Mat &img);
 
 
 #endif 
