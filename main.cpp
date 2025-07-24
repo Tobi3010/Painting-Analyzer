@@ -87,7 +87,7 @@ private:
 
     void custom_grayscale() {
         imgOriginal->copyTo(*imgModified); // Reset imgModified first
-        grayscale_splitrange2(*imgModified, 5);
+        grayscale_splitrange2(*imgModified, 4, 42);
         cv::cvtColor(*imgModified, *imgModified, cv::COLOR_GRAY2BGR);
         imgSetCallback(*imgModified);
     }

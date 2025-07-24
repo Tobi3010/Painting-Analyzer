@@ -8,7 +8,7 @@ void grayscale_fullrange(cv::Mat &img);
 
 void grayscale_splitrange(cv::Mat &img);
 
-void grayscale_splitrange2(cv::Mat &img, int shades);
+void grayscale_splitrange2(cv::Mat &img, int shades, int seed);
 
 
 #endif 
