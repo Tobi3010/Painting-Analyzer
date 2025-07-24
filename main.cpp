@@ -54,13 +54,16 @@ public:
         QVBoxLayout *layout = new QVBoxLayout(this);
         Button *grayscale = new Button("Full Range Grayscale");
         Button *grayscaleBinary = new Button("Binary Grayscale(Black & White)");
+        Button *grayscaleCustom = new Button("Custom range grayscale");
         layout->addStretch();
         layout->addWidget(grayscale);
         layout->addWidget(grayscaleBinary);
+        layout->addWidget(grayscaleCustom);
         layout->addStretch();
 
         connect(grayscale, &QPushButton::clicked, this, &GrayscaleLayout::fullrange_grayscale);
         connect(grayscaleBinary, &QPushButton::clicked, this, &GrayscaleLayout::binary_grayscale);
+        connect(grayscaleCustom, &QPushButton::clicked, this, &GrayscaleLayout::custom_grayscale);
     }
 
 private:
@@ -78,6 +81,13 @@ private:
     void binary_grayscale() {
         imgOriginal->copyTo(*imgModified); // Reset imgModified first
         grayscale_splitrange(*imgModified);
+        cv::cvtColor(*imgModified, *imgModified, cv::COLOR_GRAY2BGR);
+        imgSetCallback(*imgModified);
+    }
+
+    void custom_grayscale() {
+        imgOriginal->copyTo(*imgModified); // Reset imgModified first
+        grayscale_splitrange2(*imgModified, 5);
         cv::cvtColor(*imgModified, *imgModified, cv::COLOR_GRAY2BGR);
         imgSetCallback(*imgModified);
     }

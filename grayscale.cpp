@@ -45,5 +45,23 @@ void grayscale_splitrange(cv::Mat &img) {
 }
 
 
+void grayscale_splitrange2(cv::Mat &img, int shades) {
+    if (img.empty()) { return; }
+     
+    float conversion = 255 / (shades - 1);
+    grayscale_fullrange(img);       // Turn image into base grayscale
+    int avg =  cv::mean(img)[0];    // Find average pixel value
+  
+    
+    // Loop through pixels 
+    for(int i=0; i<img.rows; i++) {
+        for(int j=0; j<img.cols; j++)  {
+            int val = img.at<uchar>(i,j);
+            img.at<uchar>(i,j) = int(val / conversion) * conversion;
+        }
+    }
+           
+}
+
 
 
