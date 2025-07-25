@@ -11,6 +11,7 @@
 #include <QDebug>
 #include <QRegExp>
 #include <QMessageBox>
+#include <QFrame>
 
 // Only include what you need from OpenCV
 #include <opencv2/core.hpp>
@@ -30,7 +31,7 @@ public:
     Button(const QString &text, QWidget *parent = nullptr): QPushButton(text, parent){
         setStyleSheet(
             "color: #ffffff;"
-            "background-color: #000000;"
+            "background-color: #050303ff;"
             "selection-color: #ffffff;"
             "selection-background-color: green;"
         );
@@ -43,6 +44,7 @@ class GrayscaleLayout : public QWidget
 {
 public:
     GrayscaleLayout(
+            int imgWidth,
             cv::Mat* imgOriginal,               
             cv::Mat* imgModified, 
             std::function<void(const cv::Mat&) // Callback wrapper for imgSet from MainWindow
@@ -55,14 +57,70 @@ public:
             imgModified(imgModified), 
             imgSetCallback(imgSetCallback) 
     {
+
+       
         QVBoxLayout *layout = new QVBoxLayout(this);
+
+        
+
         Button *grayscale = new Button("Full Range Grayscale");
         Button *grayscaleBinary = new Button("Binary Grayscale(Black & White)");
         grayscaleCustom = new QLineEdit("Number of shades");
+
+
+        QTextStream out(stdout);
+        out << this->width() << "\n";
+
+        // Grayscale gradient (256x50)
+        cv::Mat gradientImg(50, imgWidth, CV_8UC1);
+        for (int x = 0; x < gradientImg.cols; ++x) {
+            gradientImg.col(x).setTo(x);
+        }
+        cv::Mat gradientColor;
+        cv::cvtColor(gradientImg, gradientColor, cv::COLOR_GRAY2BGR);
+        QImage gradientQImg(gradientColor.data, gradientColor.cols, gradientColor.rows, gradientColor.step, QImage::Format_RGB888);
+        QLabel *gradientLabel = new QLabel;
+        gradientLabel->setPixmap(QPixmap::fromImage(gradientQImg));
+        gradientLabel->setFrameShape(QFrame::Panel);
+        gradientLabel->setLineWidth(2);
+
+        
+        // Black & white box
+        cv::Mat binaryImg(50, imgWidth, CV_8UC1, cv::Scalar(0));
+        binaryImg.colRange(imgWidth/2, imgWidth).setTo(255);  // Right half white
+        cv::Mat binaryColor;
+        cv::cvtColor(binaryImg, binaryColor, cv::COLOR_GRAY2BGR);
+        QImage binaryQImg(binaryColor.data, binaryColor.cols, binaryColor.rows, binaryColor.step, QImage::Format_RGB888);
+        QLabel *binaryLabel = new QLabel;
+        binaryLabel->setPixmap(QPixmap::fromImage(binaryQImg));
+        binaryLabel->setFrameShape(QFrame::Panel);
+        binaryLabel->setLineWidth(2);
+
+
+        // Black & white box
+        cv::Mat customImg(50, imgWidth, CV_8UC1, cv::Scalar(0));
+        customImg.colRange(85, 169).setTo(128);  
+        customImg.colRange(170, imgWidth).setTo(256);  
+        cv::Mat customColor;
+        cv::cvtColor(customImg, customColor, cv::COLOR_GRAY2BGR);
+        QImage customQImg(customColor.data, customColor.cols, customColor.rows, customColor.step, QImage::Format_RGB888);
+        QLabel *customLabel = new QLabel;
+        customLabel->setPixmap(QPixmap::fromImage(customQImg));
+        customLabel->setFrameShape(QFrame::Panel);
+        customLabel->setLineWidth(2);
+
+
+
+        
         
         layout->addStretch();
+        layout->addWidget(gradientLabel);       
         layout->addWidget(grayscale);
+        layout->addStretch();
+        layout->addWidget(binaryLabel);         
         layout->addWidget(grayscaleBinary);
+        layout->addStretch();
+        layout->addWidget(customLabel);
         layout->addWidget(grayscaleCustom);
         layout->addStretch();
 
@@ -179,6 +237,7 @@ private:
     
     void changeMenu() {
         GrayscaleLayout *grayLayout = new GrayscaleLayout(
+            btn_widget->width(),
             &imgOriginal,
             &imgModified,                                      
             [this](const cv::Mat& img) { this->imgSet(img); },  // Callback wrapper for imgSet
