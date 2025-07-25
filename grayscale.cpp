@@ -18,7 +18,6 @@ bool isGrayImage(cv::Mat img) {
 // Turn image into grayscale with all shades (0-255)
 void grayscale_fullrange (cv::Mat &img) {
     if (img.empty()) { "No image"; return; }
-
     cv::cvtColor(img, img, cv::COLOR_BGR2GRAY);
 }
 

@@ -67,12 +67,11 @@ public:
         Button *grayscaleBinary = new Button("Binary Grayscale(Black & White)");
         grayscaleCustom = new QLineEdit("Number of shades");
 
-
+        int w = 0.85 * imgWidth;
         QTextStream out(stdout);
-        out << this->width() << "\n";
+        out << w << "\n";
 
-        // Grayscale gradient (256x50)
-        cv::Mat gradientImg(50, imgWidth, CV_8UC1);
+        cv::Mat gradientImg(50, w, CV_8UC1);
         for (int x = 0; x < gradientImg.cols; ++x) {
             gradientImg.col(x).setTo(x);
         }
@@ -84,10 +83,9 @@ public:
         gradientLabel->setFrameShape(QFrame::Panel);
         gradientLabel->setLineWidth(2);
 
-        
         // Black & white box
-        cv::Mat binaryImg(50, imgWidth, CV_8UC1, cv::Scalar(0));
-        binaryImg.colRange(imgWidth/2, imgWidth).setTo(255);  // Right half white
+        cv::Mat binaryImg(50, w, CV_8UC1, cv::Scalar(0));
+        binaryImg.colRange(w/2, w).setTo(255);  // Right half white
         cv::Mat binaryColor;
         cv::cvtColor(binaryImg, binaryColor, cv::COLOR_GRAY2BGR);
         QImage binaryQImg(binaryColor.data, binaryColor.cols, binaryColor.rows, binaryColor.step, QImage::Format_RGB888);
@@ -96,11 +94,13 @@ public:
         binaryLabel->setFrameShape(QFrame::Panel);
         binaryLabel->setLineWidth(2);
 
-
         // Black & white box
-        cv::Mat customImg(50, imgWidth, CV_8UC1, cv::Scalar(0));
-        customImg.colRange(85, 169).setTo(128);  
-        customImg.colRange(170, imgWidth).setTo(256);  
+        cv::Mat customImg(50, w, CV_8UC1, cv::Scalar(17));
+        customImg.colRange(w/4, (w/4)*2).setTo(51);  
+        customImg.colRange((w/4)*2, (w/4)*3).setTo(119);  
+        customImg.colRange((w/4)*3, w).setTo(153);  
+
+        
         cv::Mat customColor;
         cv::cvtColor(customImg, customColor, cv::COLOR_GRAY2BGR);
         QImage customQImg(customColor.data, customColor.cols, customColor.rows, customColor.step, QImage::Format_RGB888);
@@ -109,20 +109,37 @@ public:
         customLabel->setFrameShape(QFrame::Panel);
         customLabel->setLineWidth(2);
 
+        // te
+        QLabel *txt1 = new QLabel;
+        txt1->setMaximumWidth(w);
+        txt1->setWordWrap(true);
+        txt1->setText("Convert to full range grayscale, all 255 shades between black and white.");
 
+        QLabel *txt2 = new QLabel;
+        txt2->setMaximumWidth(w);
+        txt2->setWordWrap(true);
+        txt2->setText("Convert to binary grayscale, all colors will be turned either black or white.");
 
-        
-        
+        QLabel *txt3 = new QLabel;
+        txt3->setMaximumWidth(w);
+        txt3->setWordWrap(true);
+        txt3->setText("Type number of shades desired, and image will be converted to limited grayscale. Number must be between 2 and 255.");
+
+    
+
         layout->addStretch();
-        layout->addWidget(gradientLabel);       
+        layout->addWidget(gradientLabel);   
         layout->addWidget(grayscale);
+        layout->addWidget(txt1);  
         layout->addStretch();
         layout->addWidget(binaryLabel);         
         layout->addWidget(grayscaleBinary);
+        layout->addWidget(txt2);  
         layout->addStretch();
         layout->addWidget(customLabel);
         layout->addWidget(grayscaleCustom);
-        layout->addStretch();
+        layout->addWidget(txt3);  
+      
 
         connect(grayscale, &QPushButton::clicked, this, &GrayscaleLayout::fullrange_grayscale);
         connect(grayscaleBinary, &QPushButton::clicked, this, &GrayscaleLayout::binary_grayscale);
