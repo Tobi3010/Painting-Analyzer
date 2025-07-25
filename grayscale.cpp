@@ -1,9 +1,6 @@
 #include "grayscale.hpp"
 
-
-
-
-// returns true if grayscale, by checking BLUE = GREEN = RED
+// Returns true if grayscale, by checking BLUE = GREEN = RED
 // Ensures it works no matter the number of channels.
 bool isGrayImage(cv::Mat img) {
     cv::Mat dst;
@@ -25,7 +22,7 @@ void grayscale_fullrange (cv::Mat &img) {
     cv::cvtColor(img, img, cv::COLOR_BGR2GRAY);
 }
 
-// Function to divide image into n shades of grayscale (
+// Function to divide image into n shades of grayscale 
 // Only binary (black and white) supported as of now
 void grayscale_splitrange(cv::Mat &img) {
     if (img.empty()) { "No image"; return; }
@@ -51,7 +48,7 @@ void grayscale_splitrange2(cv::Mat &img, int nShades, int seed = 42) {
      
     cv::Mat data;
     grayscale_fullrange(img);                               // Turn image into base grayscale, one channel
-    img.reshape(1, img.total()).convertTo(data, CV_32F);    // Reshapes the 2D image into a flat 1D column , convert to float because KMeans expects it
+    img.reshape(1, img.total()).convertTo(data, CV_32F);    // Reshapes the 2D image into a flat 1D column, convert to float because KMeans expects it
     
     cv::theRNG().state = seed;  // Ensures the output is the same for each run
     cv::Mat labels;             // Cluster labels for pixels

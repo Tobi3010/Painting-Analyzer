@@ -6,15 +6,18 @@
 #include <QVBoxLayout>
 #include <QImage>
 #include <QPixmap>
-#include <QMenu>
-#include <opencv2/opencv.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <iostream>
-#include <QDebug>
-#include <QTextStream>
-#include "grayscale.hpp"
 #include <QFileDialog>
+#include <QLineEdit>
+#include <QDebug>
+#include <QRegExp>
+#include <QMessageBox>
 
+// Only include what you need from OpenCV
+#include <opencv2/core.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/highgui.hpp>
+
+#include "grayscale.hpp"
 
 
 
@@ -33,6 +36,7 @@ public:
         );
     }
 };
+
 
 // Layout widget with elements for grayscaling editing
 class GrayscaleLayout : public QWidget 
@@ -54,7 +58,8 @@ public:
         QVBoxLayout *layout = new QVBoxLayout(this);
         Button *grayscale = new Button("Full Range Grayscale");
         Button *grayscaleBinary = new Button("Binary Grayscale(Black & White)");
-        Button *grayscaleCustom = new Button("Custom range grayscale");
+        grayscaleCustom = new QLineEdit("Number of shades");
+        
         layout->addStretch();
         layout->addWidget(grayscale);
         layout->addWidget(grayscaleBinary);
@@ -63,13 +68,14 @@ public:
 
         connect(grayscale, &QPushButton::clicked, this, &GrayscaleLayout::fullrange_grayscale);
         connect(grayscaleBinary, &QPushButton::clicked, this, &GrayscaleLayout::binary_grayscale);
-        connect(grayscaleCustom, &QPushButton::clicked, this, &GrayscaleLayout::custom_grayscale);
+        connect(grayscaleCustom, &QLineEdit::editingFinished, this, &GrayscaleLayout::custom_grayscale);
     }
 
 private:
     cv::Mat* imgOriginal;
     cv::Mat* imgModified;
     std::function<void(const cv::Mat&)> imgSetCallback;
+    QLineEdit* grayscaleCustom;  
 
     void fullrange_grayscale() {
         imgOriginal->copyTo(*imgModified); // Reset imgModified first
@@ -86,8 +92,15 @@ private:
     }
 
     void custom_grayscale() {
+        bool ok;
+        int num = grayscaleCustom->text().toInt(&ok); 
+        if (!ok || num < 2 || num > 255) {
+            QMessageBox::warning(this, "Invalid Input", "Enter number between 2 and 255.");
+            return;
+        }
+      
         imgOriginal->copyTo(*imgModified); // Reset imgModified first
-        grayscale_splitrange2(*imgModified, 4, 42);
+        grayscale_splitrange2(*imgModified, num, 42);
         cv::cvtColor(*imgModified, *imgModified, cv::COLOR_GRAY2BGR);
         imgSetCallback(*imgModified);
     }
