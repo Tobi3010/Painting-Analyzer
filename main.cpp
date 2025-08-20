@@ -19,6 +19,8 @@
 #include <opencv2/highgui.hpp>
 
 #include "grayscale.hpp"
+#include "perspective.hpp"
+#include "ClickLabel.hpp"
 
 
 
@@ -35,6 +37,49 @@ public:
             "selection-color: #ffffff;"
             "selection-background-color: green;"
         );
+    }
+};
+
+class PerspectiveLayout : public QWidget
+{
+    
+public:
+    PerspectiveLayout(
+            int imgWidth,
+            cv::Mat* imgOriginal,               
+            cv::Mat* imgModified, 
+            std::function<void(const cv::Mat&) // Callback wrapper for imgSet from MainWindow
+            > 
+            imgSetCallback, 
+            QWidget *parent = nullptr) 
+            : 
+            QWidget(parent), 
+            imgOriginal(imgOriginal), 
+            imgModified(imgModified), 
+            imgSetCallback(imgSetCallback) 
+    {
+
+        QVBoxLayout *layout = new QVBoxLayout(this);
+        Button *test = new Button("test");
+        int w = 0.85 * imgWidth;
+
+        layout->addStretch();
+        layout->addWidget(test);
+
+        connect(test, &QPushButton::clicked, this, &PerspectiveLayout::draw_lines);
+
+
+    }
+
+private:
+    cv::Mat* imgOriginal;
+    cv::Mat* imgModified;
+    std::function<void(const cv::Mat&)> imgSetCallback;
+
+    void draw_lines() {
+        imgOriginal->copyTo(*imgModified); // Reset imgModified first
+        perspective_lines(*imgModified);
+        imgSetCallback(*imgModified);
     }
 };
 
@@ -185,6 +230,8 @@ private:
 
 
 
+
+
 // Window class
 class MainWindow : public QMainWindow
 {
@@ -205,7 +252,7 @@ private:
 
     void initUI() {
         setWindowTitle("Painting Analyzer App 2.0");
-    
+
         // Buttons ------------------------------------------------------------
         btn_widget = new QWidget();
         Button *btn_file = new Button("File");
@@ -233,9 +280,10 @@ private:
     
         
         // Image ---------------------------------------------------------------
-        imgLabel = new QLabel;
+        imgLabel = new ClickLabel;
+        static_cast<ClickLabel*>(imgLabel)->setImage(&imgOriginal);
         imgTextLabel = new QLabel;
-        imgSelect("../pics/traintrack.jpg");  
+        imgSelect("../pics/perspective-test.png");  
 
         QVBoxLayout *imgLayout = new QVBoxLayout();
         imgLayout->addWidget(imgTextLabel, 1);
@@ -253,7 +301,7 @@ private:
     }
     
     void changeMenu() {
-        GrayscaleLayout *grayLayout = new GrayscaleLayout(
+        PerspectiveLayout *grayLayout = new PerspectiveLayout(
             btn_widget->width(),
             &imgOriginal,
             &imgModified,                                      
