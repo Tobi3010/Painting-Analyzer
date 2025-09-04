@@ -12,6 +12,7 @@
 #include <QRegExp>
 #include <QMessageBox>
 #include <QFrame>
+#include <QMenu>
 
 // Only include what you need from OpenCV
 #include <opencv2/core.hpp>
@@ -226,8 +227,6 @@ private:
     }
 };
 
-    
-
 
 
 
@@ -248,6 +247,7 @@ private:
     QLabel *imgLabel;
     QWidget *btn_widget;
     QVBoxLayout *btn_layout;
+    QDialog dialog;
 
 
     void initUI() {
@@ -260,12 +260,42 @@ private:
         Button *btn_reset = new Button("Reset");
 
         connect(btn_file, &QPushButton::clicked, this, &MainWindow::fileSelect);
-        connect(btn_options, &QPushButton::clicked, this, &MainWindow::changeMenu);
         connect(btn_reset, &QPushButton::clicked, this, &MainWindow::reset);
-    
+
+        // --- Create slide-down menu for Options ---
+        QMenu *optionsMenu = new QMenu(btn_options);
+        QAction *perspectiveAction = optionsMenu->addAction("Perspective Layout");
+        QAction *grayscaleAction   = optionsMenu->addAction("Grayscale Layout");
+
+        btn_options->setMenu(optionsMenu); // attaches drop-down menu
+
+        // Handle menu actions
+        connect(perspectiveAction, &QAction::triggered, this, [this]() {
+            auto *layout = new PerspectiveLayout(
+                btn_widget->width(),
+                &imgOriginal,
+                &imgModified,
+                [this](const cv::Mat& img) { this->imgSet(img); },
+                btn_widget
+            );
+            btn_layout->insertWidget(2, layout);
+        });
+
+        connect(grayscaleAction, &QAction::triggered, this, [this]() {
+            auto *layout = new GrayscaleLayout(
+                btn_widget->width(),
+                &imgOriginal,
+                &imgModified,
+                [this](const cv::Mat& img) { this->imgSet(img); },
+                btn_widget
+            );
+            btn_layout->insertWidget(2, layout);
+        });
+
+        // Layouts
         btn_layout = new QVBoxLayout(btn_widget);
         btn_layout->addWidget(btn_file);
-        btn_layout->addWidget(btn_options);
+        btn_layout->addWidget(btn_options); // now has a drop-down
         btn_layout->addStretch();
         btn_layout->addWidget(btn_reset);
 
@@ -277,8 +307,7 @@ private:
         );
         btn_widget->setMinimumWidth(0.4*width());
         btn_widget->setMaximumWidth(0.4*width());
-    
-        
+
         // Image ---------------------------------------------------------------
         imgLabel = new ClickLabel;
         static_cast<ClickLabel*>(imgLabel)->setImage(&imgOriginal);
@@ -290,26 +319,17 @@ private:
         imgTextLabel->setAlignment(Qt::AlignCenter);
         imgLayout->addWidget(imgLabel, 20);
 
-        // Layouts
+        // Main layout
         QWidget *central = new QWidget;
         QHBoxLayout *mainLayout = new QHBoxLayout(central);
-        mainLayout->addWidget(btn_widget,1);
+        mainLayout->addWidget(btn_widget, 1);
         mainLayout->addLayout(imgLayout, 5);
         central->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        
+
         setCentralWidget(central);
     }
-    
-    void changeMenu() {
-        PerspectiveLayout *grayLayout = new PerspectiveLayout(
-            btn_widget->width(),
-            &imgOriginal,
-            &imgModified,                                      
-            [this](const cv::Mat& img) { this->imgSet(img); },  // Callback wrapper for imgSet
-            btn_widget
-        );
-        btn_layout->insertWidget(2, grayLayout); // Insert widget into current layout
-    }
+
+
 
 
     void fileSelect() {
