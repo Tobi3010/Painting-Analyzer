@@ -247,7 +247,6 @@ private:
     QLabel *imgLabel;
     QWidget *btn_widget;
     QVBoxLayout *btn_layout;
-    QDialog dialog;
 
 
     void initUI() {
@@ -271,7 +270,9 @@ private:
 
         // Handle menu actions
         connect(perspectiveAction, &QAction::triggered, this, [this]() {
-            auto *layout = new PerspectiveLayout(
+            rmCurrentLayout();
+
+            PerspectiveLayout *layout = new PerspectiveLayout(
                 btn_widget->width(),
                 &imgOriginal,
                 &imgModified,
@@ -282,7 +283,9 @@ private:
         });
 
         connect(grayscaleAction, &QAction::triggered, this, [this]() {
-            auto *layout = new GrayscaleLayout(
+            rmCurrentLayout();
+
+            GrayscaleLayout *layout = new GrayscaleLayout(
                 btn_widget->width(),
                 &imgOriginal,
                 &imgModified,
@@ -329,8 +332,13 @@ private:
         setCentralWidget(central);
     }
 
-
-
+    void rmCurrentLayout(){
+        if (btn_layout->count() >= 5) {
+            QWidget* w = btn_layout->itemAt(2)->widget();
+            btn_layout->removeWidget(w);
+            delete w; 
+        }
+    }
 
     void fileSelect() {
         QString file1Name = 
